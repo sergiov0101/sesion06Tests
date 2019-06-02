@@ -10,7 +10,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class LoginOK {
+public class ModificarContrasenaDiferentes {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -38,18 +38,27 @@ public class LoginOK {
   }
 
   @Test
-  public void testLoginok() throws Exception {
+  public void testModificarContrasenaDiferentes() throws Exception {
     driver.get("https://loginhmis1svo585.azurewebsites.net/Identity/Account/Login");
-    driver.findElement(By.linkText("Login")).click();
     driver.findElement(By.id("Input_Email")).click();
     driver.findElement(By.id("Input_Email")).clear();
     driver.findElement(By.id("Input_Email")).sendKeys("usuario@gmail.com");
+    driver.findElement(By.id("Input_Password")).click();
     driver.findElement(By.id("Input_Password")).clear();
     driver.findElement(By.id("Input_Password")).sendKeys("Abc123!");
     driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Password'])[1]/following::button[1]")).click();
-    assertEquals("Hello usuario@gmail.com!", driver.findElement(By.linkText("Hello usuario@gmail.com!")).getText());
-    driver.findElement(By.xpath("//form[@id='logoutForm']/ul/li[2]/button")).click();
-    assertTrue(isElementPresent(By.linkText("Login")));
+    driver.findElement(By.linkText("Hello usuario@gmail.com!")).click();
+    driver.findElement(By.id("change-password")).click();
+    driver.findElement(By.id("Input_OldPassword")).click();
+    driver.findElement(By.id("Input_OldPassword")).clear();
+    driver.findElement(By.id("Input_OldPassword")).sendKeys("Abc123!");
+    driver.findElement(By.id("Input_NewPassword")).clear();
+    driver.findElement(By.id("Input_NewPassword")).sendKeys("def345");
+    driver.findElement(By.id("Input_ConfirmPassword")).clear();
+    driver.findElement(By.id("Input_ConfirmPassword")).sendKeys("dfvc321");
+    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Confirm new password'])[1]/following::button[1]")).click();
+    assertEquals("The new password and confirmation password do not match.", driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Update password'])[1]/preceding::span[1]")).getText());
+    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Hello usuario@gmail.com!'])[1]/following::button[1]")).click();
   }
 
   @After

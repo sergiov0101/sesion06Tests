@@ -1,5 +1,4 @@
 package seleniumWebDriver;
-
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 import org.junit.*;
@@ -10,7 +9,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class LoginOK {
+public class ModificarContrasenaErrorpass {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -38,18 +37,28 @@ public class LoginOK {
   }
 
   @Test
-  public void testLoginok() throws Exception {
+  public void testModificarContrasenaErrorpass() throws Exception {
     driver.get("https://loginhmis1svo585.azurewebsites.net/Identity/Account/Login");
-    driver.findElement(By.linkText("Login")).click();
-    driver.findElement(By.id("Input_Email")).click();
-    driver.findElement(By.id("Input_Email")).clear();
-    driver.findElement(By.id("Input_Email")).sendKeys("usuario@gmail.com");
-    driver.findElement(By.id("Input_Password")).clear();
-    driver.findElement(By.id("Input_Password")).sendKeys("Abc123!");
+    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Password'])[1]/preceding::input[1]")).click();
+    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Password'])[1]/preceding::input[1]")).clear();
+    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Password'])[1]/preceding::input[1]")).sendKeys("usuario@gmail.com");
+    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Log in'])[2]/preceding::input[2]")).click();
+    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Log in'])[2]/preceding::input[2]")).clear();
+    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Log in'])[2]/preceding::input[2]")).sendKeys("Abc123!");
     driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Password'])[1]/following::button[1]")).click();
-    assertEquals("Hello usuario@gmail.com!", driver.findElement(By.linkText("Hello usuario@gmail.com!")).getText());
-    driver.findElement(By.xpath("//form[@id='logoutForm']/ul/li[2]/button")).click();
-    assertTrue(isElementPresent(By.linkText("Login")));
+    driver.findElement(By.linkText("Hello usuario@gmail.com!")).click();
+    driver.findElement(By.id("change-password")).click();
+    driver.findElement(By.id("Input_OldPassword")).click();
+    driver.findElement(By.id("Input_OldPassword")).clear();
+    driver.findElement(By.id("Input_OldPassword")).sendKeys("abc12");
+    driver.findElement(By.id("Input_NewPassword")).click();
+    driver.findElement(By.id("Input_NewPassword")).clear();
+    driver.findElement(By.id("Input_NewPassword")).sendKeys("Def456!");
+    driver.findElement(By.id("Input_ConfirmPassword")).clear();
+    driver.findElement(By.id("Input_ConfirmPassword")).sendKeys("Def456!");
+    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Confirm new password'])[1]/following::button[1]")).click();
+    assertEquals("Incorrect password.", driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Change password'])[1]/following::li[1]")).getText());
+    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Hello usuario@gmail.com!'])[1]/following::button[1]")).click();
   }
 
   @After

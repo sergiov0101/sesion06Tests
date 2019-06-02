@@ -1,5 +1,4 @@
 package seleniumWebDriver;
-
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 import org.junit.*;
@@ -10,7 +9,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class LoginOK {
+public class ModificarUsuario {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -35,21 +34,27 @@ public class LoginOK {
 		 driver = new HtmlUnitDriver();
 	    baseUrl = "https://www.katalon.com/";
 	    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-  }
+}
 
   @Test
-  public void testLoginok() throws Exception {
+  public void testModificarUsuario() throws Exception {
     driver.get("https://loginhmis1svo585.azurewebsites.net/Identity/Account/Login");
-    driver.findElement(By.linkText("Login")).click();
     driver.findElement(By.id("Input_Email")).click();
+    driver.findElement(By.id("Input_Email")).click();
+    // ERROR: Caught exception [ERROR: Unsupported command [doubleClick | id=Input_Email | ]]
     driver.findElement(By.id("Input_Email")).clear();
     driver.findElement(By.id("Input_Email")).sendKeys("usuario@gmail.com");
+    driver.findElement(By.id("Input_Password")).click();
     driver.findElement(By.id("Input_Password")).clear();
     driver.findElement(By.id("Input_Password")).sendKeys("Abc123!");
     driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Password'])[1]/following::button[1]")).click();
-    assertEquals("Hello usuario@gmail.com!", driver.findElement(By.linkText("Hello usuario@gmail.com!")).getText());
-    driver.findElement(By.xpath("//form[@id='logoutForm']/ul/li[2]/button")).click();
-    assertTrue(isElementPresent(By.linkText("Login")));
+    driver.findElement(By.linkText("Hello usuario@gmail.com!")).click();
+    driver.findElement(By.id("Input_PhoneNumber")).click();
+    driver.findElement(By.id("Input_PhoneNumber")).clear();
+    driver.findElement(By.id("Input_PhoneNumber")).sendKeys("76567678");
+    driver.findElement(By.id("update-profile-button")).click();
+    assertTrue(isElementPresent(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Profile'])[2]/following::div[1]")));
+    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Hello usuario@gmail.com!'])[1]/following::button[1]")).click();
   }
 
   @After
